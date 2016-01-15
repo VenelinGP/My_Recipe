@@ -1,18 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/btnSelectPhoto"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
-        android:src="@drawable/add_new_ingredient"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_below="@+id/name"
-        android:layout_alignRight="@+id/ingredients"
-        android:layout_alignEnd="@+id/ingredients" />
-
     <TextView
         android:id="@+id/name"
         android:text="Name"
@@ -24,7 +12,8 @@
         android:fontFamily="sans-serif-light"
         android:textColor="#004400"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editTxtName"
@@ -35,8 +24,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:maxLines="1"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignStart="@+id/name" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/description"
