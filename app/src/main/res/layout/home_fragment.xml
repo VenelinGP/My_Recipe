@@ -5,7 +5,7 @@
     android:clickable="false">
 
     <TextView
-        android:text="Quick find a recipie"
+        android:text="Quick find a recipe"
         android:gravity="center"
         android:textSize="30dp"
         android:layout_width="wrap_content"

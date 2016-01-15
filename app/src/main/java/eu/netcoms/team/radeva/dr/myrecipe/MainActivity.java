@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.AddNewRecipieFragment;
-import eu.netcoms.team.radeva.dr.myrecipe.fragments.AllRecipiesFragment;
+import eu.netcoms.team.radeva.dr.myrecipe.fragments.MyRecipesFragment;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
 public class MainActivity extends AppCompatActivity{
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity{
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0: return new HomePageFragment();
-                    case 1: return new AllRecipiesFragment();
+                    case 1: return new MyRecipesFragment();
                     case 2: return new AddNewRecipieFragment();
                     default: return null;
                 }
@@ -77,13 +77,13 @@ public class MainActivity extends AppCompatActivity{
 
         // AllRecipie
         android.support.v7.app.ActionBar.Tab allRecipie = mActionBar.newTab();
-        allRecipie.setText("All Recipie");
+        allRecipie.setText(R.string.myRecipes);
         allRecipie.setTabListener(listener);
         mActionBar.addTab(allRecipie);
 
         //NewRecipie
         android.support.v7.app.ActionBar.Tab newRecipie = mActionBar.newTab();
-        newRecipie.setText("Add new recipie");
+        newRecipie.setText("Add new recipe");
         newRecipie.setTabListener(listener);
         mActionBar.addTab(newRecipie);
     }

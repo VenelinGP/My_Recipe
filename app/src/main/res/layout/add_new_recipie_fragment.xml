@@ -2,6 +2,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/btnSelectPhoto"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:src="@drawable/add_new_ingredient"
+        android:layout_marginRight="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_below="@+id/name"
+        android:layout_alignRight="@+id/ingredients"
+        android:layout_alignEnd="@+id/ingredients" />
+
     <TextView
         android:id="@+id/name"
         android:text="Name"
@@ -12,10 +23,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textColor="#004400"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="2dp"/>
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/editTxtName"
@@ -26,8 +35,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:maxLines="1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/name"
+        android:layout_alignStart="@+id/name" />
 
     <TextView
         android:id="@+id/description"
@@ -40,8 +49,8 @@
         android:fontFamily="sans-serif-light"
         android:textColor="#004400"
         android:layout_below="@+id/editTxtName"
-        android:layout_alignLeft="@+id/name"
-        android:layout_alignStart="@+id/name" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editTxtDescription"
@@ -49,10 +58,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/description"
-        android:layout_alignLeft="@+id/name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:maxLines="2"/>
+        android:maxLines="2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/ingredients"
@@ -78,7 +88,8 @@
         android:layout_marginTop="3dp"
         android:layout_alignTop="@+id/ingredients"
         android:layout_toLeftOf="@+id/iv_remove_ingr"
-        android:layout_toStartOf="@+id/iv_remove_ingr" />
+        android:layout_toStartOf="@+id/iv_remove_ingr"
+        android:contentDescription="" />
 
     <ImageView
         android:id="@+id/iv_remove_ingr"
@@ -89,7 +100,8 @@
         android:layout_marginEnd="22dp"
         android:layout_alignTop="@+id/iv_new_ingr"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
@@ -106,12 +118,8 @@
             android:id="@+id/ll_ingrediants"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textView4"/>
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true" />
 
     </ScrollView>
 
@@ -122,5 +130,7 @@
         android:id="@+id/btn_save"
         android:layout_alignBottom="@+id/scrollView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="#00BB00"/>
+
 </RelativeLayout>

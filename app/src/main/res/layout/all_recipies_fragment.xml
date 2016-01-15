@@ -4,16 +4,19 @@
 
     <TextView
         android:id="@+id/AllViewTitle"
-        android:text="All Recipies"
-        android:textSize="40dp"
+        android:text="@string/myRecipes"
+        android:textSize="40sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-light"
+        android:textColor="#004400"/>
 
     <Button
         android:id="@+id/btn_show"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnShow"
+        android:background="#00BB00"
         android:layout_below="@+id/AllViewTitle"/>
 
     <EditText
