@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Find My Recipie</string>
+    <string name="app_name">Find My Recipe</string>
+    <string name="add_recipe">Add new recipe</string>
+    <string name="title">Title</string>
+    <string name="image_link">Image Link</string>
+    <string name="btnSave">Save</string>
+    <string name="btnShow">Show</string>
 </resources>

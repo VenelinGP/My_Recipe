@@ -8,20 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import eu.netcoms.team.radeva.dr.myrecipe.R;
+import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
 
 public class AddNewRecipieFragment extends Fragment {
 
     private ViewGroup mContainerView;
     private int count;
+    private EditText editName;
+    private EditText editImageLink;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +55,21 @@ public class AddNewRecipieFragment extends Fragment {
                     mContainerView.removeViewAt(count - 1);
                     count--;
                 }
+            }
+        });
+
+        Button btnSave = (Button) rootView.findViewById(R.id.btn_save);
+        editName = (EditText)rootView.findViewById(R.id.editTxtName);
+        //TODO: Da opravim vryzkite img_link <-> description
+        editImageLink = (EditText)rootView.findViewById(R.id.editTxtDescription);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (v.getId() == R.id.btn_save) {
+                    DbOperations dbOperations = new DbOperations(getActivity().getApplicationContext());
+                    dbOperations.AddToRecipes(0, editName.getText().toString(), editImageLink.getText().toString(), 0);
+                    Toast.makeText(getActivity().getApplicationContext(), "Recipe is Added", Toast.LENGTH_SHORT).show();
+                }
+                Toast.makeText(getActivity().getApplicationContext(), "Recipe New", Toast.LENGTH_LONG).show();
             }
         });
 
