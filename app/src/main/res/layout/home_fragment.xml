@@ -5,7 +5,7 @@
     android:clickable="false">
 
     <TextView
-        android:text="Search &amp; Enjoy!"
+        android:text="Quick find a recipie"
         android:gravity="center"
         android:textSize="30dp"
         android:layout_width="wrap_content"
@@ -33,7 +33,8 @@
         android:textColorHint="#004400"
         android:textColorLink="#004400"
         android:singleLine="true"
-        android:lines="1"/>
+        android:lines="1"
+        android:fontFamily="sans-serif-light"/>
 
     <ListView
         android:layout_width="wrap_content"
@@ -52,7 +53,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_corner"
+        android:background="@drawable/home_found_items_style"
         android:textSize="20dp"
         android:fontFamily="sans-serif-light"
         android:text="Type a word to search."/>
