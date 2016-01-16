@@ -126,5 +126,5 @@
         android:layout_alignBottom="@+id/scrollView"
         android:layout_alignRight="@+id/iv_remove_ingr"
         android:layout_alignEnd="@+id/iv_remove_ingr" />
-    
+
 </RelativeLayout>
