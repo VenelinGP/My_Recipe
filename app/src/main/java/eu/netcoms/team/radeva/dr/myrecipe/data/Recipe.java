@@ -1,8 +1,8 @@
 package eu.netcoms.team.radeva.dr.myrecipe.data;
 
 public class Recipe {
-    public int recipe_id;
-    public String title;
+    public int recipeId;
+    public String name;
     public String image_link;
     public int is_uploaded;
 
@@ -10,28 +10,28 @@ public class Recipe {
         super();
     }
 
-    public Recipe(int recipe_id, String title, String image_link){
+    public Recipe(int recipeId, String name, String image_link){
         super();
-        this.setRecipe_id(recipe_id);
-        this.setTitle(title);
+        this.setRecipeId(recipeId);
+        this.setName(name);
         this.setImage_link(image_link);
         this.setIs_uploaded(0);
     }
 
-    public Integer getRecipe_id() {
-        return recipe_id;
+    public Integer getRecipeId() {
+        return recipeId;
     }
 
-    public void setRecipe_id(Integer recipe_id) {
-        this.recipe_id = recipe_id;
+    public void setRecipeId(Integer recipeId) {
+        this.recipeId = recipeId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImage_link() {

@@ -160,7 +160,7 @@ public class AddNewRecipieFragment extends Fragment {
                 if (cursor.moveToFirst()) {
                     do {
                         Recipe recipe = new Recipe();
-                        recipe.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                        recipe.setName(cursor.getString(cursor.getColumnIndex("title")));
                         recipe.setImage_link(cursor.getString(cursor.getColumnIndex("image_link")));
                         recipeArray.add(recipe);
                     } while (cursor.moveToNext());
@@ -169,7 +169,7 @@ public class AddNewRecipieFragment extends Fragment {
                 String name = nameOfRecipe.getText().toString().toLowerCase();
 
                 for(Recipe recipe : recipeArray) {
-                    String currentRecipeName = recipe.getTitle().toLowerCase();
+                    String currentRecipeName = recipe.getName().toLowerCase();
                     if(name.equals(currentRecipeName)) {
                         nameFailMessage = "Recipe already exists.";
                         validName = false;
