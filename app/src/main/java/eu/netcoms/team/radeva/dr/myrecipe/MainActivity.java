@@ -2,6 +2,7 @@ package eu.netcoms.team.radeva.dr.myrecipe;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.AddNewRecipeFragment;
-import eu.netcoms.team.radeva.dr.myrecipe.fragments.AllRecipesFragment;
+import eu.netcoms.team.radeva.dr.myrecipe.fragments.MyRecipesFragment;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
-public class MainActivity extends AppCompatActivity{
+
+public class MainActivity extends AppCompatActivity implements HomePageFragment.onRecipeClickListener {
     private ViewPager viewPager;
     private FragmentPagerAdapter tabPagesAdapter;
 
@@ -23,7 +25,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         android.support.v7.app.ActionBar mActionBar = getSupportActionBar();
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0: return new HomePageFragment();
-                    case 1: return new AllRecipesFragment();
+                    case 1: return new MyRecipesFragment();
                     case 2: return new AddNewRecipeFragment();
                     default: return null;
                 }
@@ -77,15 +78,22 @@ public class MainActivity extends AppCompatActivity{
         mActionBar.addTab(home);
 
         // AllRecipie
-        android.support.v7.app.ActionBar.Tab myRecipe = mActionBar.newTab();
-        myRecipe.setText(R.string.AllRecipes);
-        myRecipe.setTabListener(listener);
-        mActionBar.addTab(myRecipe);
+        android.support.v7.app.ActionBar.Tab allRecipie = mActionBar.newTab();
+        allRecipie.setText("All recipe");
+        allRecipie.setTabListener(listener);
+        mActionBar.addTab(allRecipie);
 
         //NewRecipie
         android.support.v7.app.ActionBar.Tab newRecipie = mActionBar.newTab();
         newRecipie.setText("Add new recipe");
         newRecipie.setTabListener(listener);
         mActionBar.addTab(newRecipie);
+    }
+
+    @Override
+    public void onRecipeSelected(String text) {
+        Intent intent = new Intent(this, CurrentRecipeActivity.class);
+        intent.putExtra("Message", text);
+        startActivity(intent);
     }
 }

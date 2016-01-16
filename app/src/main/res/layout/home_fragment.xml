@@ -59,4 +59,5 @@
         android:textSize="20dp"
         android:fontFamily="sans-serif-light"
         android:text="Type a word to search."/>
+
 </RelativeLayout>

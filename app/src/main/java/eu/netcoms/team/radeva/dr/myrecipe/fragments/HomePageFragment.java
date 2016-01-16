@@ -1,5 +1,7 @@
 package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,25 +10,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import eu.netcoms.team.radeva.dr.myrecipe.MainActivity;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 
 public class HomePageFragment extends Fragment {
     private ArrayList<String> names;
     private ArrayList<String> found;
+    onRecipeClickListener mListener;
+
+    public interface onRecipeClickListener {
+        void onRecipeSelected(String text);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (onRecipeClickListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onRecipeClickListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.home_fragment, container, false);
         // Hides the keyboard on start
-
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         names = new ArrayList<>();
@@ -49,6 +68,13 @@ public class HomePageFragment extends Fragment {
         ListView stuff = (ListView)rootView.findViewById(R.id.lv_found_items);
         ListAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.home_found_items_list_view, found);
         stuff.setAdapter(adapter);
+        stuff.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView et = (TextView)view;
+                mListener.onRecipeSelected(et.getText().toString());
+            }
+        });
 
         editText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
