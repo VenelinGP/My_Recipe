@@ -11,8 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.AddNewRecipeFragment;
-import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.AllRecipesFragment;
+import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
 public class MainActivity extends AppCompatActivity{
     private ViewPager viewPager;

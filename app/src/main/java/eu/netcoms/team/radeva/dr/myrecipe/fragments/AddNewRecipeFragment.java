@@ -40,7 +40,7 @@ public class AddNewRecipeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.add_new_recipie_fragment, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mContainerView = (ViewGroup)rootView.findViewById(R.id.ll_ingrediants);
-        Button newIngredient = (Button)rootView.findViewById(R.id.iv_new_ingr);
+        final Button newIngredient = (Button)rootView.findViewById(R.id.iv_new_ingr);
         Button removeIngredient = (Button)rootView.findViewById(R.id.iv_remove_ingr);
 
         // Do not touch the counter - will cause a bug!
@@ -174,13 +174,20 @@ public class AddNewRecipeFragment extends Fragment {
                     }
                 }
 
+                // Adding recipe in table recipes.
                 dbOperations.AddToRecipes(countItems + 1, editName.getText().toString(), editDescription.getText().toString(), imgLink, 0);
+
+                // Adding ingredients in table products.
                 int ingredientsCount = mContainerView.getChildCount();
+                int findIndex;
                 for (int i = 0; i < ingredientsCount; i++) {
                     EditText ingredient =(EditText) mContainerView.getChildAt(i);
                     String txtIngredient = ingredient.getText().toString();
-                    dbOperations.AddToProducts(countItems+1, txtIngredient);
+                    findIndex = txtIngredient.indexOf(")");
+                    String newIngredient = txtIngredient.substring(findIndex + 2, txtIngredient.length());
+                    dbOperations.AddToProducts(countItems+1, newIngredient);
                 }
+
                 //TODO: Make text of fields reset.
                 Toast.makeText(getActivity().getApplicationContext(), "Recipe added!", Toast.LENGTH_SHORT).show();
             }

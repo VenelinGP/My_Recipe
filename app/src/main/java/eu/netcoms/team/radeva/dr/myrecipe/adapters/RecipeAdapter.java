@@ -2,7 +2,6 @@ package eu.netcoms.team.radeva.dr.myrecipe.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
