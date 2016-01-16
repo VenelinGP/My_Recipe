@@ -45,7 +45,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         tvName.setText(data.get(position).getName());
         tvDescription.setText(data.get(position).getDescription());
         //int resourceId = Activity.getResources().getIdentifier("testimage", "drawable", "your.package.name");
-        //ivImage.setImageResource((Activity)context).getResources().getIdentifier(data.get(position).getImage_link()), "drawable",);
+        ivImage.setImageResource(getContext().getResources().getIdentifier(data.get(position).getImage_link(), "drawable", "eu.netcoms.team.radeva.dr.myrecipe"));
         return row;
     }
 }

@@ -155,8 +155,9 @@ public class AddNewRecipeFragment extends Fragment {
                 if (cursor.moveToFirst()) {
                     do {
                         Recipe recipe = new Recipe(countItems+1,
-                                cursor.getString(cursor.getColumnIndex("title")),
-                                cursor.getString(cursor.getColumnIndex("description")));
+                                cursor.getString(cursor.getColumnIndex("name")),
+                                cursor.getString(cursor.getColumnIndex("description")),
+                                cursor.getString(cursor.getColumnIndex("image_link")));
                         recipeArray.add(recipe);
                     } while (cursor.moveToNext());
                 }

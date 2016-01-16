@@ -11,7 +11,7 @@ public class Recipe {
         super();
     }
 
-    public Recipe(int recipeId, String name, String description){
+    public Recipe(int recipeId, String name, String description, String image_link){
         super();
         this.setRecipeId(recipeId);
         this.setName(name);

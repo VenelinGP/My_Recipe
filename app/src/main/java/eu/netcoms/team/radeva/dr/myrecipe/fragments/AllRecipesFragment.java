@@ -38,11 +38,10 @@ public class AllRecipesFragment extends ListFragment {
         if (cursor.moveToFirst()) {
             do {
                 Recipe recipe = new Recipe();
-                int a = cursor.getColumnIndex("recipe_id");
-                recipe.setRecipeId(cursor.getInt(0));
-                recipe.setName(cursor.getString(1));
-                recipe.setImage_link(cursor.getString(2));
-//                recipe.setImage_link(cursor.getString(cursor.getColumnIndex("image_link")));
+                recipe.setRecipeId(cursor.getInt(cursor.getColumnIndex("recipe_id")));
+                recipe.setName(cursor.getString(cursor.getColumnIndex("name")));
+                recipe.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                recipe.setImage_link(cursor.getString(cursor.getColumnIndex("image_link")));
                 recipeArray.add(recipe);
             } while (cursor.moveToNext());
         }
