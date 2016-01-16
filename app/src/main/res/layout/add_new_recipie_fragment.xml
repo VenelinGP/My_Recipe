@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
@@ -16,7 +17,7 @@
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/editTxtName"
+        android:id="@+id/et_Name"
         android:fontFamily="sans-serif-light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,6 +25,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:maxLines="1"
+        android:maxLength="25"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -37,12 +39,12 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textColor="#004400"
-        android:layout_below="@+id/editTxtName"
+        android:layout_below="@+id/et_Name"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/editTxtDescription"
+        android:id="@+id/et_Description"
         android:fontFamily="sans-serif-light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,34 +65,35 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:textColor="#004400"
-        android:layout_below="@+id/editTxtDescription"
-        android:layout_alignLeft="@+id/editTxtDescription"
-        android:layout_alignStart="@+id/editTxtDescription" />
+        android:layout_below="@+id/et_Description"
+        android:layout_alignLeft="@+id/et_Description"
+        android:layout_alignStart="@+id/et_Description" />
 
-    <ImageView
+    <Button
         android:id="@+id/iv_new_ingr"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
-        android:src="@drawable/add_new_ingredient"
-        android:layout_marginRight="44dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginTop="3dp"
-        android:layout_alignTop="@+id/ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add row"
+        android:theme="@android:style/Theme.Material.Light"
+        tools:targetApi="lollipop"
+        android:textSize="10dp"
+        android:layout_above="@+id/scrollView"
         android:layout_toLeftOf="@+id/iv_remove_ingr"
-        android:layout_toStartOf="@+id/iv_remove_ingr"
-        android:contentDescription="" />
+        android:layout_alignTop="@+id/iv_remove_ingr" />
 
-    <ImageView
+    <Button
         android:id="@+id/iv_remove_ingr"
-        android:layout_width="23dp"
-        android:layout_height="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/remove_new_ingredient"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp"
-        android:layout_alignTop="@+id/iv_new_ingr"
+        android:text="Remove row"
+        android:textSize="10dp"
+        android:theme="@android:style/Theme.Material"
+        android:layout_below="@+id/et_Description"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:contentDescription="" />
+        tools:targetApi="lollipop"
+        android:layout_above="@+id/scrollView" />
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
@@ -112,14 +115,15 @@
 
     </ScrollView>
 
-    <Button
+    <ImageButton
+        android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btnSave"
-        android:id="@+id/btn_save"
+        android:layout_gravity="end|bottom"
+        android:src="@android:drawable/ic_input_add"
+        android:tint="@android:color/white"
+        android:background="@drawable/oval"
         android:layout_alignBottom="@+id/scrollView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#00BB00"/>
-
+        android:layout_alignRight="@+id/iv_remove_ingr"
+        android:layout_alignEnd="@+id/iv_remove_ingr" />
 </RelativeLayout>
