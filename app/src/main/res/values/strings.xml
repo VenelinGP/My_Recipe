@@ -4,5 +4,5 @@
     <string name="image_link">Image Link</string>
     <string name="btnSave">Save</string>
     <string name="btnShow">Show</string>
-    <string name="myRecipes">My Recipes</string>
+    <string name="AllRecipes">All Recipes</string>
 </resources>

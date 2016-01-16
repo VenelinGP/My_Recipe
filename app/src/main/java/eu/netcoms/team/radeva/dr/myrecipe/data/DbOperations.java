@@ -10,11 +10,12 @@ public class DbOperations extends StoreDbHelper {
         super(context);
     }
 
-    public void AddToRecipes(Integer recipe_id, String title, String image_link, Integer is_uploaded) {
+    public void AddToRecipes(Integer recipe_id, String name, String description, String image_link, Integer is_uploaded) {
         openForWriting();
         ContentValues contentValues = new ContentValues();
         contentValues.put(RecipeContract.RecipesEntry.COLUMN_RECIPE_ID, recipe_id);
-        contentValues.put(RecipeContract.RecipesEntry.COLUMN_TITLE, title);
+        contentValues.put(RecipeContract.RecipesEntry.COLUMN_NAME, name);
+        contentValues.put(RecipeContract.RecipesEntry.COLUMN_DESCRIPTION, description);
         contentValues.put(RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK, image_link);
         contentValues.put(RecipeContract.RecipesEntry.COLUMN_IS_UPLOADED, is_uploaded);
         sqLiteDatabase.insert("recipes", null, contentValues);
@@ -22,8 +23,11 @@ public class DbOperations extends StoreDbHelper {
 
     public Cursor getRecipesContent() {
         openForReading();
-        String[] projection = {RecipeContract.RecipesEntry._ID, RecipeContract.RecipesEntry.COLUMN_TITLE, RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK};
-        String sortOrder = RecipeContract.RecipesEntry.COLUMN_TITLE + " ASC";
+        String[] projection = {RecipeContract.RecipesEntry.COLUMN_RECIPE_ID,
+                RecipeContract.RecipesEntry.COLUMN_NAME,
+                RecipeContract.RecipesEntry.COLUMN_DESCRIPTION,
+                RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK};
+        String sortOrder = RecipeContract.RecipesEntry.COLUMN_NAME + " ASC";
         return this.sqLiteDatabase.query("recipes", projection, null, null, null, null, sortOrder);
     }
 

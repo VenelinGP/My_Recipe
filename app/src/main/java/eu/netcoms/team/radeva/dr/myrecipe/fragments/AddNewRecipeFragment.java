@@ -2,7 +2,6 @@ package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,14 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -25,7 +19,6 @@ import java.util.ArrayList;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
 import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
-import eu.netcoms.team.radeva.dr.myrecipe.data.RecipeContract;
 import eu.netcoms.team.radeva.dr.myrecipe.validations.Validator;
 
 public class AddNewRecipeFragment extends Fragment {
@@ -33,7 +26,8 @@ public class AddNewRecipeFragment extends Fragment {
     private ViewGroup mContainerView;
     private int count;
     private EditText editName;
-    private EditText editImageLink;
+    private EditText editDescription;
+    private String imgLink = "@drawable/glorious_sou_recipes_icon400_400x400";
     // Used for validation fail toasts
     private boolean validName = false;
     private boolean validDescription = false;
@@ -136,7 +130,7 @@ public class AddNewRecipeFragment extends Fragment {
         ImageButton btnSave = (ImageButton) rootView.findViewById(R.id.btn_save);
         editName = (EditText)rootView.findViewById(R.id.et_Name);
 
-        editImageLink = (EditText)rootView.findViewById(R.id.et_Description);
+        editDescription = (EditText)rootView.findViewById(R.id.et_Description);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -162,7 +156,7 @@ public class AddNewRecipeFragment extends Fragment {
                     do {
                         Recipe recipe = new Recipe(countItems+1,
                                 cursor.getString(cursor.getColumnIndex("title")),
-                                cursor.getString(cursor.getColumnIndex("image_link")));
+                                cursor.getString(cursor.getColumnIndex("description")));
                         recipeArray.add(recipe);
                     } while (cursor.moveToNext());
                 }
@@ -179,12 +173,12 @@ public class AddNewRecipeFragment extends Fragment {
                     }
                 }
 
-                dbOperations.AddToRecipes(countItems + 1, editName.getText().toString(), editImageLink.getText().toString(), 0);
+                dbOperations.AddToRecipes(countItems + 1, editName.getText().toString(), editDescription.getText().toString(), imgLink, 0);
                 int ingredientsCount = mContainerView.getChildCount();
                 for (int i = 0; i < ingredientsCount; i++) {
                     EditText ingredient =(EditText) mContainerView.getChildAt(i);
-                    String txtIntegrient = ingredient.getText().toString();
-                    dbOperations.AddToProducts(countItems+1, txtIntegrient);
+                    String txtIngredient = ingredient.getText().toString();
+                    dbOperations.AddToProducts(countItems+1, txtIngredient);
                 }
                 //TODO: Make text of fields reset.
                 Toast.makeText(getActivity().getApplicationContext(), "Recipe added!", Toast.LENGTH_SHORT).show();

@@ -20,7 +20,8 @@ public class StoreDbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE IF NOT EXISTS " + RecipeContract.RecipesEntry.TABLE_NAME + " (" +
                         RecipeContract.RecipesEntry._ID + " INTEGER PRIMARY KEY, " +
                         RecipeContract.RecipesEntry.COLUMN_RECIPE_ID + " INTEGER, " +
-                        RecipeContract.RecipesEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
+                        RecipeContract.RecipesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                        RecipeContract.RecipesEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
                         RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK + " TEXT NOT NULL, " +
                         RecipeContract.RecipesEntry.COLUMN_IS_UPLOADED + " INTEGER DEFAULT 0" +
                         ");";
@@ -37,6 +38,7 @@ public class StoreDbHelper extends SQLiteOpenHelper {
                         RecipeContract.PreparationEntry.COLUMN_RECIPE_ID + " INTEGER NOT NULL, " +
                         RecipeContract.PreparationEntry.PREPARATION + " TEXT NOT NULL" +
                         ");";
+
         sqLiteDatabase.execSQL(SQL_CREATE_RECIPES_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_PRODUCTS_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_PREPARATION_RECIPE_TABLE);

@@ -2,10 +2,12 @@ package eu.netcoms.team.radeva.dr.myrecipe.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -32,6 +34,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView tvRecipeId = (TextView) row.findViewById(R.id.txtRecipeId);
         TextView tvName = (TextView) row.findViewById(R.id.txtTitle);
         TextView tvDescription = (TextView) row.findViewById(R.id.txtDescription);
+        ImageView ivImage = (ImageView) row.findViewById(R.id.imgIcon);
 //        File imgFile = new File(data.get(position).getImage_link());
 //        if (imgFile.exists()){
 //            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -40,7 +43,9 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 //        }
         tvRecipeId.setText(data.get(position).getRecipeId().toString());
         tvName.setText(data.get(position).getName());
-        tvDescription.setText(data.get(position).getImage_link());
+        tvDescription.setText(data.get(position).getDescription());
+        //int resourceId = Activity.getResources().getIdentifier("testimage", "drawable", "your.package.name");
+        //ivImage.setImageResource((Activity)context).getResources().getIdentifier(data.get(position).getImage_link()), "drawable",);
         return row;
     }
 }

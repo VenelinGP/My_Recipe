@@ -7,7 +7,8 @@ public class RecipeContract {
         public static final String TABLE_NAME = "recipes";
 
         public static final String COLUMN_RECIPE_ID = "recipe_id";
-        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_IMAGE_LINK = "image_link";
         public static final String COLUMN_IS_UPLOADED = "is_uploaded";
     }
