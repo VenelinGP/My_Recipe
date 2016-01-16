@@ -122,9 +122,7 @@
         android:layout_gravity="end|bottom"
         android:src="@android:drawable/ic_input_add"
         android:tint="@android:color/white"
-        android:background="@drawable/oval"
         android:layout_alignBottom="@+id/scrollView"
         android:layout_alignRight="@+id/iv_remove_ingr"
         android:layout_alignEnd="@+id/iv_remove_ingr" />
-
 </RelativeLayout>

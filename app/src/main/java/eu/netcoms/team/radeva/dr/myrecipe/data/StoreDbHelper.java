@@ -37,7 +37,6 @@ public class StoreDbHelper extends SQLiteOpenHelper {
                         RecipeContract.PreparationEntry.COLUMN_RECIPE_ID + " INTEGER NOT NULL, " +
                         RecipeContract.PreparationEntry.PREPARATION + " TEXT NOT NULL" +
                         ");";
-
         sqLiteDatabase.execSQL(SQL_CREATE_RECIPES_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_PRODUCTS_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_PREPARATION_RECIPE_TABLE);

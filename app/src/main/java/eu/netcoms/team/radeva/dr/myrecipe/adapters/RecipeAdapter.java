@@ -31,6 +31,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         View row = inflater.inflate(layoutId, null);
         TextView tvRecipeId = (TextView) row.findViewById(R.id.txtRecipeId);
         TextView tvName = (TextView) row.findViewById(R.id.txtTitle);
+        TextView tvDescription = (TextView) row.findViewById(R.id.txtDescription);
 //        File imgFile = new File(data.get(position).getImage_link());
 //        if (imgFile.exists()){
 //            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -39,6 +40,7 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
 //        }
         tvRecipeId.setText(data.get(position).getRecipeId().toString());
         tvName.setText(data.get(position).getName());
+        tvDescription.setText(data.get(position).getImage_link());
         return row;
     }
 }

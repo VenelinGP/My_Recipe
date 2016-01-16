@@ -3,7 +3,7 @@ package eu.netcoms.team.radeva.dr.myrecipe.data;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+
 
 public class DbOperations extends StoreDbHelper {
     public DbOperations(Context context) {
@@ -41,7 +41,7 @@ public class DbOperations extends StoreDbHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(RecipeContract.ProductsEntry.COLUMN_RECIPE_ID, recipe_id);
         contentValues.put(RecipeContract.ProductsEntry.PRODUCT, product);
-        this.sqLiteDatabase.insert("product", null, contentValues);
+        this.sqLiteDatabase.insert("products", null, contentValues);
     }
 
     public Cursor getProductsContent(String recipe_id) {

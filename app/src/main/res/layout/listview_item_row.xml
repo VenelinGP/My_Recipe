@@ -21,25 +21,37 @@
         android:id="@+id/txtRecipeId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="txtRecipeId"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_above="@+id/txtTitle"
-        android:layout_marginBottom="18dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignLeft="@+id/txtTitle"
-        android:layout_alignStart="@+id/txtTitle" />
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imgIcon"
+        android:layout_toEndOf="@+id/imgIcon"
+        android:layout_marginTop="28dp" />
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Large Text"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="10dp"
+        android:text="txtTitle"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignBottom="@+id/imgIcon"
-        android:layout_marginBottom="20dp"
+        android:layout_alignTop="@+id/txtRecipeId"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/imgIcon"
-        android:layout_toEndOf="@+id/imgIcon" />
+        android:layout_toRightOf="@+id/txtRecipeId"
+        android:layout_toEndOf="@+id/txtRecipeId" />
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+
+        android:layout_below="@+id/txtTitle"
+        android:layout_alignLeft="@+id/txtRecipeId"
+        android:layout_alignStart="@+id/txtRecipeId" />
 
 </RelativeLayout>
