@@ -47,7 +47,6 @@ public class AllRecipesFragment extends ListFragment {
         }
         RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity(), R.layout.listview_item_row, recipeArray);
 
-
         ListView listView = (ListView) rootView.findViewById(R.id.lvAllRecipes);
         listView.addFooterView(header);
         listView.setAdapter(recipeAdapter);

@@ -12,7 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.AddNewRecipeFragment;
-import eu.netcoms.team.radeva.dr.myrecipe.fragments.MyRecipesFragment;
+import eu.netcoms.team.radeva.dr.myrecipe.fragments.AllRecipesFragment;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements HomePageFragment.
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0: return new HomePageFragment();
-                    case 1: return new MyRecipesFragment();
+                    case 1: return new AllRecipesFragment();
                     case 2: return new AddNewRecipeFragment();
                     default: return null;
                 }
