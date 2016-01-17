@@ -33,7 +33,6 @@ public class AddNewRecipeFragment extends Fragment {
     // Used for validation fail toasts
     private boolean validName = false;
     private boolean validDescription = false;
-    private boolean validIngredients= false;
     private String nameFailMessage = "Name cannot be empty";
     private String descriptionailMessage = "Description cannot be empty";
 
@@ -44,7 +43,6 @@ public class AddNewRecipeFragment extends Fragment {
         mContainerView = (ViewGroup)rootView.findViewById(R.id.ll_ingrediants);
         final Button newIngredient = (Button)rootView.findViewById(R.id.iv_new_ingr);
         Button removeIngredient = (Button)rootView.findViewById(R.id.iv_remove_ingr);
-
         // Do not touch the counter - will cause a bug!
         count = 0;
         EditText defaultFirstEditText = new EditText(getActivity());

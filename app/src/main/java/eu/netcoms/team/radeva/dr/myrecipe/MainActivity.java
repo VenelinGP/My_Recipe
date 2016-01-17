@@ -91,9 +91,9 @@ public class MainActivity extends AppCompatActivity implements HomePageFragment.
     }
 
     @Override
-    public void onRecipeSelected(String text) {
+    public void onRecipeSelected(String name) {
         Intent intent = new Intent(this, CurrentRecipeActivity.class);
-        intent.putExtra("Message", text);
+        intent.putExtra("Message", name);
         startActivity(intent);
     }
 }

@@ -33,7 +33,7 @@ public class HomePageFragment extends Fragment {
     private ArrayList<Recipe> result;
 
     public interface onRecipeClickListener {
-        void onRecipeSelected(String text);
+        void onRecipeSelected(String name);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class HomePageFragment extends Fragment {
         int countItems = cursor.getCount();
         if (cursor.moveToFirst()) {
             do {
-                Recipe recipe = new Recipe(countItems+1,
+                Recipe recipe = new Recipe(countItems + 1,
                         cursor.getString(cursor.getColumnIndex("name")),
                         cursor.getString(cursor.getColumnIndex("description")),
                         cursor.getString(cursor.getColumnIndex("image_link")));
@@ -69,18 +69,20 @@ public class HomePageFragment extends Fragment {
             } while (cursor.moveToNext());
         }
 
-        final EditText editText = (EditText)rootView.findViewById(R.id.et_search);
-        final TextView textView = (TextView)rootView.findViewById(R.id.tv_found_items_count);
+        final EditText editText = (EditText) rootView.findViewById(R.id.et_search);
+        final TextView textView = (TextView) rootView.findViewById(R.id.tv_found_items_count);
 
-        ListView stuff = (ListView)rootView.findViewById(R.id.lv_found_items);
+        ListView stuff = (ListView) rootView.findViewById(R.id.lv_found_items);
         final RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity(), R.layout.listview_item_row, result);
 
         stuff.setAdapter(recipeAdapter);
         stuff.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView et = (TextView)view.findViewById(R.id.txtTitle);
-                mListener.onRecipeSelected(et.getText().toString());
+                TextView clickedRecipe = (TextView) view.findViewById(R.id.txtTitle);
+                String nameOfrecipe = clickedRecipe.getText().toString();
+
+                mListener.onRecipeSelected(nameOfrecipe);
             }
         });
 
@@ -88,19 +90,21 @@ public class HomePageFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String[] input = editText.getText().toString().split("\\s+");
                 result.clear();
+                recipeAdapter.clear();
 
-                if(input[0].length() <= 0) {
+                if (input[0].length() <= 0) {
                     textView.setText("Type a word to search.");
                     recipeAdapter.clear();
                     return;
                 }
 
-                for(Recipe recipe : recipeArray) {
+                for (Recipe recipe : recipeArray) {
                     String[] currentRecipeName = recipe.getName().split("\\s+");
-                    for(int i = 0; i < input.length; i++) {
-                        for(int j = 0; j < currentRecipeName.length; j++) {
-                            if (currentRecipeName[j].toLowerCase().startsWith(input[0].toLowerCase())){
-                                if(!result.contains(recipe)) {
+                    for (int i = 0; i < input.length; i++) {
+                        String word = input[i].toLowerCase();
+                        for (int j = 0; j < currentRecipeName.length; j++) {
+                            if (currentRecipeName[j].toLowerCase().startsWith(word)) {
+                                if (!result.contains(recipe)) {
                                     result.add(recipe);
                                 }
                             }

@@ -30,11 +30,9 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View row = inflater.inflate(layoutId, null);
-        TextView tvRecipeId = (TextView) row.findViewById(R.id.txtRecipeId);
         TextView tvName = (TextView) row.findViewById(R.id.txtTitle);
         TextView tvDescription = (TextView) row.findViewById(R.id.txtDescription);
         ImageView ivImage = (ImageView) row.findViewById(R.id.imgIcon);
-        tvRecipeId.setText(data.get(position).getRecipeId().toString());
         tvName.setText(data.get(position).getName());
         tvDescription.setText(data.get(position).getDescription());
         //int resourceId = Activity.getResources().getIdentifier("testimage", "drawable", "your.package.name");

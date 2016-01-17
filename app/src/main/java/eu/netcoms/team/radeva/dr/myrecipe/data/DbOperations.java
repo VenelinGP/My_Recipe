@@ -48,7 +48,7 @@ public class DbOperations extends StoreDbHelper {
         this.sqLiteDatabase.insert("products", null, contentValues);
     }
 
-    public Cursor getProductsContent(String recipe_id) {
+    public Cursor getProductsContent(int recipe_id) {
         openForReading();
         String[] projection = {RecipeContract.ProductsEntry.COLUMN_RECIPE_ID, RecipeContract.ProductsEntry.PRODUCT};
         String selection = RecipeContract.ProductsEntry.COLUMN_RECIPE_ID + " LIKE ?";
