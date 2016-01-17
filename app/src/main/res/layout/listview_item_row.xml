@@ -9,6 +9,7 @@
         android:id="@+id/imgIcon"
         android:layout_width="74dp"
         android:layout_height="112dp"
+        android:src="@drawable/glorious_sou_recipes_icon400_400x400"
         android:layout_marginRight="16dp"
         android:maxHeight="30dp"
         android:maxWidth="30dp"
