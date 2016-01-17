@@ -87,9 +87,7 @@ public class HomePageFragment extends Fragment {
         editText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
                 String[] input = editText.getText().toString().split("\\s+");
-                //TODO:   Check if more than 2 strings are passed and if they both start
-                //TODO:   the wanted word. Example: Salata and Shopska Salata should be
-                //TODO:   found both.
+                result.clear();
 
                 if(input[0].length() <= 0) {
                     textView.setText("Type a word to search.");
