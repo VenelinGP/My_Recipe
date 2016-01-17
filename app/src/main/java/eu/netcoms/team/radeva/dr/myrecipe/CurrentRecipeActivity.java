@@ -2,12 +2,17 @@ package eu.netcoms.team.radeva.dr.myrecipe;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
@@ -21,6 +26,28 @@ public class CurrentRecipeActivity extends AppCompatActivity {
     private ArrayList<ProductsTable> productArray;
     private int count = 0;
 
+    private static final int SELECT_PICTURE = 1;
+    private ImageView imageOfCurrentRecipe;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            Uri uri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                // Log.d(TAG, String.valueOf(bitmap));
+
+                imageOfCurrentRecipe.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,13 +56,32 @@ public class CurrentRecipeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String message = intent.getStringExtra("Message");
 
-        ImageView imageOfCurrentRecipe = (ImageView) findViewById(R.id.iv_current_recipe_image);
+        imageOfCurrentRecipe = (ImageView) findViewById(R.id.iv_current_recipe_image);
         TextView nameOfCurrentRecipe = (TextView) findViewById(R.id.tv_current_recipe_name);
         TextView descriptionOfCurrentRecipe = (TextView) findViewById(R.id.tv_current_recipe_description);
         currentRecipeIngredients = (ViewGroup) findViewById(R.id.ll_current_recipe_ingrediants);
 
         recipeArray = new ArrayList<>();
         productArray = new ArrayList<>();
+
+        Intent another = new Intent();
+        // Show only images, no videos or anything else
+        another.setType("image/*");
+        another.setAction(Intent.ACTION_GET_CONTENT);
+        // Always show the chooser (if there are multiple options available)
+        startActivityForResult(Intent.createChooser(another, "Select Picture"), SELECT_PICTURE);
+
+        imageOfCurrentRecipe.setLongClickable(true);
+        imageOfCurrentRecipe.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+                return false;
+            }
+        });
 
         final DbOperations dbOperations = new DbOperations(getApplicationContext());
         Cursor cursor = dbOperations.getRecipesContent();
@@ -72,7 +118,7 @@ public class CurrentRecipeActivity extends AppCompatActivity {
                     } while (cursor.moveToNext());
                 }
 
-                for(ProductsTable product : productArray) {
+                for (ProductsTable product : productArray) {
                     TextView currentProduct = new TextView(this);
                     currentProduct.setText((count + 1) + ") " + product.getProduct());
                     currentRecipeIngredients.addView(currentProduct, count++);
