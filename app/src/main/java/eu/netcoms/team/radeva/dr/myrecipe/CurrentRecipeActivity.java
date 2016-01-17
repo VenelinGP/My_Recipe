@@ -24,6 +24,7 @@ public class CurrentRecipeActivity extends AppCompatActivity {
     private ArrayList<Recipe> recipeArray;
     private ViewGroup currentRecipeIngredients;
     private ArrayList<ProductsTable> productArray;
+    private Recipe currentRecipe;
     private int count = 0;
 
     private static final int SELECT_PICTURE = 1;
@@ -36,7 +37,9 @@ public class CurrentRecipeActivity extends AppCompatActivity {
         if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK && data != null && data.getData() != null) {
 
             Uri uri = data.getData();
-
+            DbOperations dbOperations = new DbOperations(getApplicationContext());
+            dbOperations.UpdateToRecipes(currentRecipe.getRecipeId(), uri.toString());
+            //content://media/external/images/media/15268
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                 // Log.d(TAG, String.valueOf(bitmap));
@@ -63,13 +66,6 @@ public class CurrentRecipeActivity extends AppCompatActivity {
 
         recipeArray = new ArrayList<>();
         productArray = new ArrayList<>();
-
-        Intent another = new Intent();
-        // Show only images, no videos or anything else
-        another.setType("image/*");
-        another.setAction(Intent.ACTION_GET_CONTENT);
-        // Always show the chooser (if there are multiple options available)
-        startActivityForResult(Intent.createChooser(another, "Select Picture"), SELECT_PICTURE);
 
         imageOfCurrentRecipe.setLongClickable(true);
         imageOfCurrentRecipe.setOnLongClickListener(new View.OnLongClickListener() {
@@ -100,11 +96,23 @@ public class CurrentRecipeActivity extends AppCompatActivity {
         for (Recipe recipe : recipeArray) {
             String currentRecipeName = recipe.getName().toLowerCase();
             if (recipeName.equals(currentRecipeName)) {
+                currentRecipe = recipe;
                 nameOfCurrentRecipe.setText(message);
                 descriptionOfCurrentRecipe.setText(recipe.getDescription());
 
-                int resId = getResources().getIdentifier(recipe.getImage_link(), "drawable", getPackageName());
-                imageOfCurrentRecipe.setImageResource(resId);
+                if(!recipe.getImage_link().startsWith("content")) {
+                    int resId = getResources().getIdentifier(recipe.getImage_link(), "drawable", getPackageName());
+                    imageOfCurrentRecipe.setImageResource(resId);
+                }
+                else {
+                    Uri uri = Uri.parse(recipe.getImage_link());
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        imageOfCurrentRecipe.setImageBitmap(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
 
                 cursor = dbOperations.getProductsContent(recipe.getRecipeId());
                 if (cursor.moveToFirst()) {

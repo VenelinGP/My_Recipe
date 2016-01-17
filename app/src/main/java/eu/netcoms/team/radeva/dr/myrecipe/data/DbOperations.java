@@ -39,6 +39,12 @@ public class DbOperations extends StoreDbHelper {
         sqLiteDatabase.update("recipes", contentValues, RecipeContract.RecipesEntry.COLUMN_RECIPE_ID + "=" +recipe_id.toString(),null);
     }
 
+    public void UpdateToRecipes(Integer recipe_id, String uri) {
+        openForWriting();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK, uri);
+        sqLiteDatabase.update("recipes", contentValues, RecipeContract.RecipesEntry.COLUMN_RECIPE_ID + "=" +recipe_id.toString(),null);
+    }
     public int getRecipesCount() {
         openForReading();
         String countQuery = "SELECT  * FROM recipes";
