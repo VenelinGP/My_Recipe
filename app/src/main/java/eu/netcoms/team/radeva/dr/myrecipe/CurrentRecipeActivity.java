@@ -64,9 +64,9 @@ public class CurrentRecipeActivity extends AppCompatActivity {
                 if (cursor.moveToFirst()) {
                     do {
                         ProductsTable product = new ProductsTable();
-                        product.setRecipeId(cursor.getInt(cursor.getColumnIndex("recipe_id")));
-                        product.setName(cursor.getString(cursor.getColumnIndex("product")));
-                        if (product.getRecipeId() == recipe.getRecipeId()) {
+                        product.setRecipe_id(cursor.getInt(cursor.getColumnIndex("recipe_id")));
+                        product.setProduct(cursor.getString(cursor.getColumnIndex("product")));
+                        if (product.getRecipe_id() == recipe.getRecipeId()) {
                             productArray.add(product);
                         }
                     } while (cursor.moveToNext());

@@ -26,9 +26,17 @@ public class DbOperations extends StoreDbHelper {
         String[] projection = {RecipeContract.RecipesEntry.COLUMN_RECIPE_ID,
                 RecipeContract.RecipesEntry.COLUMN_NAME,
                 RecipeContract.RecipesEntry.COLUMN_DESCRIPTION,
-                RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK};
+                RecipeContract.RecipesEntry.COLUMN_IMAGE_LINK,
+                RecipeContract.RecipesEntry.COLUMN_IS_UPLOADED};
         String sortOrder = RecipeContract.RecipesEntry.COLUMN_NAME + " ASC";
         return this.sqLiteDatabase.query("recipes", projection, null, null, null, null, sortOrder);
+    }
+
+    public void UpdateToRecipes(Integer recipe_id) {
+        openForWriting();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(RecipeContract.RecipesEntry.COLUMN_IS_UPLOADED, 1);
+        sqLiteDatabase.update("recipes", contentValues, RecipeContract.RecipesEntry.COLUMN_RECIPE_ID + "=" +recipe_id.toString(),null);
     }
 
     public int getRecipesCount() {
@@ -48,7 +56,7 @@ public class DbOperations extends StoreDbHelper {
         this.sqLiteDatabase.insert("products", null, contentValues);
     }
 
-    public Cursor getProductsContent(int recipe_id) {
+    public Cursor getProductsContent(Integer recipe_id) {
         openForReading();
         String[] projection = {RecipeContract.ProductsEntry.COLUMN_RECIPE_ID, RecipeContract.ProductsEntry.PRODUCT};
         String selection = RecipeContract.ProductsEntry.COLUMN_RECIPE_ID + " LIKE ?";

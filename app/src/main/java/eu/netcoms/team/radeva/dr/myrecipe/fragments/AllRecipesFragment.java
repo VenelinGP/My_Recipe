@@ -25,7 +25,6 @@ import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AllRecipesFragment extends ListFragment {
 
-    private ListView listView;
     private ArrayList<Recipe> recipeArray;
     private RecipeAdapter recipeAdapter;
 

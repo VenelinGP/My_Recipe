@@ -19,6 +19,7 @@ public class RecipeContract {
         public static final String COLUMN_RECIPE_ID = "recipe_id";
         public static final String PRODUCT= "product";
     }
+
     public static final class PreparationEntry implements BaseColumns {
         public static final String TABLE_NAME = "preparation_recipe";
 
