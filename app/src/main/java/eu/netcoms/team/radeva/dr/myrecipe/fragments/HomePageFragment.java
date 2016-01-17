@@ -2,6 +2,7 @@ package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -22,11 +23,14 @@ import java.util.ArrayList;
 
 import eu.netcoms.team.radeva.dr.myrecipe.MainActivity;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
+import eu.netcoms.team.radeva.dr.myrecipe.adapters.RecipeAdapter;
+import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
+import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
 
 public class HomePageFragment extends Fragment {
-    private ArrayList<String> names;
-    private ArrayList<String> found;
-    onRecipeClickListener mListener;
+    private ArrayList<Recipe> recipeArray;
+    private onRecipeClickListener mListener;
+    private ArrayList<Recipe> result;
 
     public interface onRecipeClickListener {
         void onRecipeSelected(String text);
@@ -48,56 +52,65 @@ public class HomePageFragment extends Fragment {
         // Hides the keyboard on start
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        names = new ArrayList<>();
-        found = new ArrayList<>();
+        DbOperations dbOperations = new DbOperations(getActivity().getApplicationContext());
 
-        names.add("Salata");
-        names.add("Kurvavata Meri");
-        names.add("Ruska salata");
-        names.add("Salata");
-        names.add("Salata");
-        names.add("Salata");
-        names.add("Salata");
-        names.add("Salata");
-        names.add("Salata");
-        names.add("Salata");
+        recipeArray = new ArrayList<>();
+        result = new ArrayList<>();
+
+        Cursor cursor = dbOperations.getRecipesContent();
+        int countItems = cursor.getCount();
+        if (cursor.moveToFirst()) {
+            do {
+                Recipe recipe = new Recipe(countItems+1,
+                        cursor.getString(cursor.getColumnIndex("name")),
+                        cursor.getString(cursor.getColumnIndex("description")),
+                        cursor.getString(cursor.getColumnIndex("image_link")));
+                recipeArray.add(recipe);
+            } while (cursor.moveToNext());
+        }
 
         final EditText editText = (EditText)rootView.findViewById(R.id.et_search);
         final TextView textView = (TextView)rootView.findViewById(R.id.tv_found_items_count);
 
         ListView stuff = (ListView)rootView.findViewById(R.id.lv_found_items);
-        ListAdapter adapter = new ArrayAdapter<>(this.getActivity(), R.layout.home_found_items_list_view, found);
-        stuff.setAdapter(adapter);
+        final RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity(), R.layout.listview_item_row, result);
+
+        stuff.setAdapter(recipeAdapter);
         stuff.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView et = (TextView)view;
+                TextView et = (TextView)parent.findViewById(R.id.txtTitle);
                 mListener.onRecipeSelected(et.getText().toString());
             }
         });
 
         editText.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
-                String input = editText.getText().toString();
+                String[] input = editText.getText().toString().split("\\s+");
                 //TODO:   Check if more than 2 strings are passed and if they both start
                 //TODO:   the wanted word. Example: Salata and Shopska Salata should be
                 //TODO:   found both.
 
-                if(input.length() <= 0) {
+                if(input[0].length() <= 0) {
                     textView.setText("Type a word to search.");
-                    found.clear();
+                    recipeAdapter.clear();
                     return;
                 }
 
-                for(String name : names) {
-                    if(name.toLowerCase().startsWith(input.toLowerCase())) {
-                        if(!found.contains(name)) {
-                            found.add(name);
+                for(Recipe recipe : recipeArray) {
+                    String[] currentRecipeName = recipe.getName().split("\\s+");
+                    for(int i = 0; i < input.length; i++) {
+                        for(int j = 0; j < currentRecipeName.length; j++) {
+                            if (currentRecipeName[j].toLowerCase().startsWith(input[0].toLowerCase())){
+                                if(!result.contains(recipe)) {
+                                    result.add(recipe);
+                                }
+                            }
                         }
                     }
                 }
 
-                textView.setText("Found " + found.size() + " item(s)!");
+                textView.setText("Found " + result.size() + " item(s)!");
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

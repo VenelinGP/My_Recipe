@@ -34,12 +34,6 @@ public class RecipeAdapter extends ArrayAdapter<Recipe> {
         TextView tvName = (TextView) row.findViewById(R.id.txtTitle);
         TextView tvDescription = (TextView) row.findViewById(R.id.txtDescription);
         ImageView ivImage = (ImageView) row.findViewById(R.id.imgIcon);
-//        File imgFile = new File(data.get(position).getImage_link());
-//        if (imgFile.exists()){
-//            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//            ImageView ivIcon = (ImageView) row.findViewById(R.id.imgIcon);
-//            ivIcon.setImageBitmap(myBitmap);
-//        }
         tvRecipeId.setText(data.get(position).getRecipeId().toString());
         tvName.setText(data.get(position).getName());
         tvDescription.setText(data.get(position).getDescription());

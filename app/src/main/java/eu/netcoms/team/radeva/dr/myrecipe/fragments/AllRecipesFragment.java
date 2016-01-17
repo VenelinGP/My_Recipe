@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,14 @@ import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
 public class AllRecipesFragment extends ListFragment {
 
     private ListView listView;
+    private ArrayList<Recipe> recipeArray;
+    private RecipeAdapter recipeAdapter;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @Nullable
     @Override
@@ -32,7 +41,7 @@ public class AllRecipesFragment extends ListFragment {
         View header = getActivity().getLayoutInflater().inflate(R.layout.listview_header_row, null);
         View rootView = inflater.inflate(R.layout.all_recipes_fragment, container, false);
 
-        ArrayList<Recipe> recipeArray = new ArrayList<>();
+        recipeArray = new ArrayList<>();
         final DbOperations dbOperations = new DbOperations(getActivity().getApplicationContext());
         Cursor cursor = dbOperations.getRecipesContent();
         if (cursor.moveToFirst()) {
@@ -45,7 +54,7 @@ public class AllRecipesFragment extends ListFragment {
                 recipeArray.add(recipe);
             } while (cursor.moveToNext());
         }
-        RecipeAdapter recipeAdapter = new RecipeAdapter(getActivity(), R.layout.listview_item_row, recipeArray);
+        recipeAdapter = new RecipeAdapter(getActivity(), R.layout.listview_item_row, recipeArray);
 
         ListView listView = (ListView) rootView.findViewById(R.id.lvAllRecipes);
         listView.addFooterView(header);
