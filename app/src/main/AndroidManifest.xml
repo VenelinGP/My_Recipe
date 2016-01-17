@@ -20,7 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CurrentRecipeActivity"></activity>
+        <activity android:name=".CurrentRecipeActivity" />
+
+        <service
+            android:name=".services.RecipeService"
+            android:enabled="true"
+            android:exported="false"/>
     </application>
 
 </manifest>

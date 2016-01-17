@@ -1,5 +1,6 @@
 package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
 import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.services.RecipeService;
 import eu.netcoms.team.radeva.dr.myrecipe.validations.Validator;
 
 public class AddNewRecipeFragment extends Fragment {
@@ -210,7 +212,8 @@ public class AddNewRecipeFragment extends Fragment {
                     String newIngredient = txtIngredient.substring(findIndex + 2, txtIngredient.length());
                     dbOperations.AddToProducts(countItems + 1, newIngredient);
                 }
-
+                Intent startSrv = new Intent(getActivity(), RecipeService.class);
+                getActivity().startService(startSrv);
                 //TODO: Make text of fields reset.
                 Toast.makeText(getActivity().getApplicationContext(), "Recipe added!", Toast.LENGTH_SHORT).show();
             }
