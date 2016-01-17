@@ -79,7 +79,7 @@ public class HomePageFragment extends Fragment {
         stuff.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TextView et = (TextView)parent.findViewById(R.id.txtTitle);
+                TextView et = (TextView)view.findViewById(R.id.txtTitle);
                 mListener.onRecipeSelected(et.getText().toString());
             }
         });

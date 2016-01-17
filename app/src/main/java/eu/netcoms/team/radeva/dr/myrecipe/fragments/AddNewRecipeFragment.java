@@ -117,15 +117,40 @@ public class AddNewRecipeFragment extends Fragment {
             }
         });
 
+        newIngredient.setLongClickable(true);
+        newIngredient.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                for (int i = 0; i < 5; i++) {
+                    EditText newView = new EditText(getActivity());
+                    newView.setText((count + 1) + ") ");
+                    mContainerView.addView(newView, count);
+                    count++;
+                }
+                return false;
+            }
+        });
+
         removeIngredient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(count > 0) {
+                if (count > 0) {
                     mContainerView.removeViewAt(count - 1);
                     count--;
                 }
             }
         });
+
+        removeIngredient.setLongClickable(true);
+        removeIngredient.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mContainerView.removeAllViews();
+                count = 0;
+                return false;
+            }
+        });
+
 
         ImageButton btnSave = (ImageButton) rootView.findViewById(R.id.btn_save);
         editName = (EditText)rootView.findViewById(R.id.et_Name);
@@ -134,15 +159,13 @@ public class AddNewRecipeFragment extends Fragment {
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(!validName) {
+                if (!validName) {
                     Toast.makeText(getActivity().getApplicationContext(), nameFailMessage, Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if(!validDescription) {
+                } else if (!validDescription) {
                     Toast.makeText(getActivity().getApplicationContext(), descriptionailMessage, Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if(mContainerView.getChildCount() < 2) {
+                } else if (mContainerView.getChildCount() < 2) {
                     Toast.makeText(getActivity().getApplicationContext(), "A recipe must have at least two Ingredients.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -154,7 +177,7 @@ public class AddNewRecipeFragment extends Fragment {
                 int countItems = cursor.getCount();
                 if (cursor.moveToFirst()) {
                     do {
-                        Recipe recipe = new Recipe(countItems+1,
+                        Recipe recipe = new Recipe(countItems + 1,
                                 cursor.getString(cursor.getColumnIndex("name")),
                                 cursor.getString(cursor.getColumnIndex("description")),
                                 cursor.getString(cursor.getColumnIndex("image_link")));
@@ -164,9 +187,9 @@ public class AddNewRecipeFragment extends Fragment {
 
                 String name = nameOfRecipe.getText().toString().toLowerCase();
 
-                for(Recipe recipe : recipeArray) {
+                for (Recipe recipe : recipeArray) {
                     String currentRecipeName = recipe.getName().toLowerCase();
-                    if(name.equals(currentRecipeName)) {
+                    if (name.equals(currentRecipeName)) {
                         nameFailMessage = "Recipe already exists.";
                         validName = false;
                         Toast.makeText(getActivity().getApplicationContext(), nameFailMessage, Toast.LENGTH_SHORT).show();
@@ -181,11 +204,11 @@ public class AddNewRecipeFragment extends Fragment {
                 int ingredientsCount = mContainerView.getChildCount();
                 int findIndex;
                 for (int i = 0; i < ingredientsCount; i++) {
-                    EditText ingredient =(EditText) mContainerView.getChildAt(i);
+                    EditText ingredient = (EditText) mContainerView.getChildAt(i);
                     String txtIngredient = ingredient.getText().toString();
                     findIndex = txtIngredient.indexOf(")");
                     String newIngredient = txtIngredient.substring(findIndex + 2, txtIngredient.length());
-                    dbOperations.AddToProducts(countItems+1, newIngredient);
+                    dbOperations.AddToProducts(countItems + 1, newIngredient);
                 }
 
                 //TODO: Make text of fields reset.
