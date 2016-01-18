@@ -25,12 +25,12 @@ import eu.netcoms.team.radeva.dr.myrecipe.MainActivity;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.adapters.RecipeAdapter;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 
 public class HomePageFragment extends Fragment {
-    private ArrayList<Recipe> recipeArray;
+    private ArrayList<RecipesTable> recipeArray;
     private onRecipeClickListener mListener;
-    private ArrayList<Recipe> result;
+    private ArrayList<RecipesTable> result;
 
     public interface onRecipeClickListener {
         void onRecipeSelected(String name);
@@ -61,7 +61,7 @@ public class HomePageFragment extends Fragment {
         int countItems = cursor.getCount();
         if (cursor.moveToFirst()) {
             do {
-                Recipe recipe = new Recipe(countItems + 1,
+                RecipesTable recipe = new RecipesTable(countItems + 1,
                         cursor.getString(cursor.getColumnIndex("name")),
                         cursor.getString(cursor.getColumnIndex("description")),
                         cursor.getString(cursor.getColumnIndex("image_link")));
@@ -98,7 +98,7 @@ public class HomePageFragment extends Fragment {
                     return;
                 }
 
-                for (Recipe recipe : recipeArray) {
+                for (RecipesTable recipe : recipeArray) {
                     String[] currentRecipeName = recipe.getName().split("\\s+");
                     for (int i = 0; i < input.length; i++) {
                         String word = input[i].toLowerCase();

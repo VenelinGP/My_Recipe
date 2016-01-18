@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 import eu.netcoms.team.radeva.dr.myrecipe.services.RecipeService;
 import eu.netcoms.team.radeva.dr.myrecipe.validations.Validator;
 
@@ -172,12 +172,12 @@ public class AddNewRecipeFragment extends Fragment {
 
                 DbOperations dbOperations = new DbOperations(getActivity().getApplicationContext());
 
-                ArrayList<Recipe> recipeArray = new ArrayList<>();
+                ArrayList<RecipesTable> recipeArray = new ArrayList<>();
                 Cursor cursor = dbOperations.getRecipesContent();
                 int countItems = cursor.getCount();
                 if (cursor.moveToFirst()) {
                     do {
-                        Recipe recipe = new Recipe(countItems + 1,
+                        RecipesTable recipe = new RecipesTable(countItems + 1,
                                 cursor.getString(cursor.getColumnIndex("name")),
                                 cursor.getString(cursor.getColumnIndex("description")),
                                 cursor.getString(cursor.getColumnIndex("image_link")));
@@ -187,7 +187,7 @@ public class AddNewRecipeFragment extends Fragment {
 
                 String name = nameOfRecipe.getText().toString().toLowerCase();
 
-                for (Recipe recipe : recipeArray) {
+                for (RecipesTable recipe : recipeArray) {
                     String currentRecipeName = recipe.getName().toLowerCase();
                     if (name.equals(currentRecipeName)) {
                         nameFailMessage = "Recipe already exists.";

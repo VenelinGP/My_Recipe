@@ -22,6 +22,19 @@ public class RecipesTable extends DataItem {
     @ServerProperty("is_uploaded")
     private Integer is_uploaded;
 
+    public RecipesTable(){
+        super();
+    }
+
+    public RecipesTable(int recipeId, String name, String description, String image_link){
+        super();
+        this.setRecipe_id(recipeId);
+        this.setName(name);
+        this.setDescription(description);
+        this.setImage_link(image_link);
+        this.setIs_uploaded(0);
+    }
+
     public Integer getRecipe_id() {
         return recipe_id;
     }

@@ -12,15 +12,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import eu.netcoms.team.radeva.dr.myrecipe.R;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 
-public class RecipeAdapter extends ArrayAdapter<Recipe> {
+public class RecipeAdapter extends ArrayAdapter<RecipesTable> {
 
     private Context context;
     private  int layoutId;
-    List<Recipe> data;
+    List<RecipesTable> data;
 
-    public RecipeAdapter(Context context, int layoutResourceId, List<Recipe> data) {
+    public RecipeAdapter(Context context, int layoutResourceId, List<RecipesTable> data) {
         super(context, layoutResourceId, data);
         this.context = context;
         this.layoutId = layoutResourceId;

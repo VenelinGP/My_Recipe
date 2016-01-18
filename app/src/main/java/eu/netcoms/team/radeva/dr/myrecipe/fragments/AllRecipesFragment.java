@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.adapters.RecipeAdapter;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AllRecipesFragment extends ListFragment {
 
-    private ArrayList<Recipe> recipeArray;
+    private ArrayList<RecipesTable> recipeArray;
     private RecipeAdapter recipeAdapter;
 
     @Override
@@ -45,8 +45,8 @@ public class AllRecipesFragment extends ListFragment {
         Cursor cursor = dbOperations.getRecipesContent();
         if (cursor.moveToFirst()) {
             do {
-                Recipe recipe = new Recipe();
-                recipe.setRecipeId(cursor.getInt(cursor.getColumnIndex("recipe_id")));
+                RecipesTable recipe = new RecipesTable();
+                recipe.setRecipe_id(cursor.getInt(cursor.getColumnIndex("recipe_id")));
                 recipe.setName(cursor.getString(cursor.getColumnIndex("name")));
                 recipe.setDescription(cursor.getString(cursor.getColumnIndex("description")));
                 recipe.setImage_link(cursor.getString(cursor.getColumnIndex("image_link")));

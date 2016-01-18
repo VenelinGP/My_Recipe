@@ -16,15 +16,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
+import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 import eu.netcoms.team.radeva.dr.myrecipe.models.ProductsTable;
 
 public class CurrentRecipeActivity extends AppCompatActivity {
 
-    private ArrayList<Recipe> recipeArray;
+    private ArrayList<RecipesTable> recipeArray;
     private ViewGroup currentRecipeIngredients;
     private ArrayList<ProductsTable> productArray;
-    private Recipe currentRecipe;
+    private RecipesTable currentRecipe;
     private int count = 0;
 
     private static final int SELECT_PICTURE = 1;
@@ -38,7 +38,7 @@ public class CurrentRecipeActivity extends AppCompatActivity {
 
             Uri uri = data.getData();
             DbOperations dbOperations = new DbOperations(getApplicationContext());
-            dbOperations.UpdateToRecipes(currentRecipe.getRecipeId(), uri.toString());
+            dbOperations.UpdateToRecipes(currentRecipe.getRecipe_id(), uri.toString());
             //content://media/external/images/media/15268
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
@@ -83,8 +83,8 @@ public class CurrentRecipeActivity extends AppCompatActivity {
         Cursor cursor = dbOperations.getRecipesContent();
         if (cursor.moveToFirst()) {
             do {
-                Recipe recipe = new Recipe();
-                recipe.setRecipeId(cursor.getInt(cursor.getColumnIndex("recipe_id")));
+                RecipesTable recipe = new RecipesTable();
+                recipe.setRecipe_id(cursor.getInt(cursor.getColumnIndex("recipe_id")));
                 recipe.setName(cursor.getString(cursor.getColumnIndex("name")));
                 recipe.setDescription(cursor.getString(cursor.getColumnIndex("description")));
                 recipe.setImage_link(cursor.getString(cursor.getColumnIndex("image_link")));
@@ -93,7 +93,7 @@ public class CurrentRecipeActivity extends AppCompatActivity {
         }
 
         String recipeName = message.toLowerCase();
-        for (Recipe recipe : recipeArray) {
+        for (RecipesTable recipe : recipeArray) {
             String currentRecipeName = recipe.getName().toLowerCase();
             if (recipeName.equals(currentRecipeName)) {
                 currentRecipe = recipe;
@@ -114,13 +114,13 @@ public class CurrentRecipeActivity extends AppCompatActivity {
                     }
                 }
 
-                cursor = dbOperations.getProductsContent(recipe.getRecipeId());
+                cursor = dbOperations.getProductsContent(recipe.getRecipe_id());
                 if (cursor.moveToFirst()) {
                     do {
                         ProductsTable product = new ProductsTable();
                         product.setRecipe_id(cursor.getInt(cursor.getColumnIndex("recipe_id")));
                         product.setProduct(cursor.getString(cursor.getColumnIndex("product")));
-                        if (product.getRecipe_id() == recipe.getRecipeId()) {
+                        if (product.getRecipe_id() == recipe.getRecipe_id()) {
                             productArray.add(product);
                         }
                     } while (cursor.moveToNext());

@@ -3,6 +3,7 @@ package eu.netcoms.team.radeva.dr.myrecipe.services;
 import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
 
@@ -15,8 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
-import eu.netcoms.team.radeva.dr.myrecipe.data.Recipe;
-import eu.netcoms.team.radeva.dr.myrecipe.models.PreparationRecipeTable;
 import eu.netcoms.team.radeva.dr.myrecipe.models.ProductsTable;
 import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
 
@@ -24,6 +23,10 @@ public class RecipeService extends Service {
     EverliveApp recipeApp;
     private ArrayList<RecipesTable> recipeArray;
     private ArrayList<ProductsTable> producsArray;
+
+
+    final Handler handler = new Handler();
+    final long delay = 1 * 10 * 1000;
 
     @Override
     public void onCreate() {
@@ -38,24 +41,11 @@ public class RecipeService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        recipeApp.getAccessToken();
 
-        getDataFromRecipes();
-        for (RecipesTable currentRecipe  : recipeArray) {
-            uploadToTableRecipes(currentRecipe);
+        sendingDataToBackend();
 
-            getDataFromProducts(currentRecipe);
-            uploadToTableProducts();
-        }
-
-//        uploadToTableProducts();
-//        uploadToTablePreparationRecipe();
-
-        stopSelf();
         return super.onStartCommand(intent, flags, startId);
     }
-
-
 
     @Override
     public void onDestroy() {
@@ -69,6 +59,18 @@ public class RecipeService extends Service {
         appSettings.setAppId(appID);
         appSettings.setUseHttps(false);
         recipeApp = new EverliveApp(appSettings);
+    }
+
+    private  void sendingDataToBackend (){
+        recipeApp.getAccessToken();
+
+        getDataFromRecipes();
+        for (RecipesTable currentRecipe  : recipeArray) {
+            uploadToTableRecipes(currentRecipe);
+
+            getDataFromProducts(currentRecipe);
+            uploadToTableProducts();
+        }
     }
 
     private void uploadToTableRecipes(final RecipesTable recipe) {
@@ -138,35 +140,47 @@ public class RecipeService extends Service {
     }
 
     private void uploadToTableProducts() {
-//        ProductsTable pt = new ProductsTable();
-//        pt.setRecipe_id(0);
-//        pt.setProduct("kori za banica");
         recipeApp.workWith().data(ProductsTable.class).create(producsArray).executeAsync(new RequestResultCallbackAction<ProductsTable>() {
             @Override
             public void invoke(RequestResult<ProductsTable> requestResult) {
                 if (requestResult.getSuccess()) {
                     System.out.println("===== Sucsess - Products Table =====");
+                    stopService();
                 } else {
-                    System.out.println("===== Error ====="+requestResult.getError().toString());
+                    System.out.println("===== Error =====");
+                    runSendingAgain();
                 }
             }
 
         });
     }
 
-    private void uploadToTablePreparationRecipe() {
-        PreparationRecipeTable prt = new PreparationRecipeTable();
-        prt.setRecipe_id(0);
-        prt.setPreparation("Slagate korite v tava.");
-        recipeApp.workWith().data(PreparationRecipeTable.class).create(prt).executeAsync(new RequestResultCallbackAction<PreparationRecipeTable>() {
-            @Override
-            public void invoke(RequestResult<PreparationRecipeTable> requestResult) {
-                if (requestResult.getSuccess()) {
-                    System.out.println("===== Sucsess - Preparation Recipe Table=====");
-                } else {
-                    System.out.println("===== Error ====="+requestResult.getError().toString());
-                }
+    private void runSendingAgain(){
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                sendingDataToBackend();
             }
-        });
+        }, delay);
+    }
+
+    private void stopService(){
+        stopSelf();
     }
 }
+
+
+//    private void uploadToTablePreparationRecipe() {
+//        PreparationRecipeTable prt = new PreparationRecipeTable();
+//        prt.setRecipe_id(0);
+//        prt.setPreparation("Slagate korite v tava.");
+//        recipeApp.workWith().data(PreparationRecipeTable.class).create(prt).executeAsync(new RequestResultCallbackAction<PreparationRecipeTable>() {
+//            @Override
+//            public void invoke(RequestResult<PreparationRecipeTable> requestResult) {
+//                if (requestResult.getSuccess()) {
+//                    System.out.println("===== Sucsess - Preparation Recipe Table=====");
+//                } else {
+//                    System.out.println("===== Error ====="+requestResult.getError().toString());
+//                }
+//            }
+//        });
+//    }
