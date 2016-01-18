@@ -1,9 +1,13 @@
 package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -36,8 +40,10 @@ public class AddNewRecipeFragment extends Fragment {
     private String nameFailMessage = "Name cannot be empty";
     private String descriptionailMessage = "Description cannot be empty";
 
+
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.add_new_recipie_fragment, container, false);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         mContainerView = (ViewGroup)rootView.findViewById(R.id.ll_ingrediants);
@@ -213,9 +219,21 @@ public class AddNewRecipeFragment extends Fragment {
                 Intent startSrv = new Intent(getActivity(), RecipeService.class);
                 getActivity().startService(startSrv);
                 //TODO: Make text of fields reset.
-                Toast.makeText(getActivity().getApplicationContext(), "Recipe added!", Toast.LENGTH_SHORT).show();
+                sendNotification(name);
             }
         });
         return rootView;
+    }
+
+    private void sendNotification(String name) {
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity());
+        mBuilder.setContentTitle("My recipe");
+        mBuilder.setContentText("Recipe: " + name +" is added to database.");
+        mBuilder.setSmallIcon(R.drawable.icon);
+
+        Notification notificationObj = mBuilder.build();
+        NotificationManager notificatinManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificatinManager.notify(6904, notificationObj);
     }
 }
