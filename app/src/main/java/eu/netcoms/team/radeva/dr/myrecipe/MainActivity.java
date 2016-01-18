@@ -18,7 +18,7 @@ import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
 public class MainActivity extends AppCompatActivity
         implements HomePageFragment.onRecipeClickListener,
-        AllRecipesFragment.onRecipeClickListener {
+        AllRecipesFragment.onRecipeClickListener, AddNewRecipeFragment.onRecipeClickListener{
     private ViewPager viewPager;
     private FragmentPagerAdapter tabPagesAdapter;
 

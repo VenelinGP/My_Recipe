@@ -1,7 +1,9 @@
 package eu.netcoms.team.radeva.dr.myrecipe.fragments;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import eu.netcoms.team.radeva.dr.myrecipe.MainActivity;
 import eu.netcoms.team.radeva.dr.myrecipe.R;
 import eu.netcoms.team.radeva.dr.myrecipe.data.DbOperations;
 import eu.netcoms.team.radeva.dr.myrecipe.models.RecipesTable;
@@ -34,11 +37,26 @@ public class AddNewRecipeFragment extends Fragment {
     private EditText editName;
     private EditText editDescription;
     private String imgLink = "@drawable/glorious_sou_recipes_icon400_400x400";
+    private onRecipeClickListener mListener;
     // Used for validation fail toasts
     private boolean validName = false;
     private boolean validDescription = false;
     private String nameFailMessage = "Name cannot be empty";
     private String descriptionailMessage = "Description cannot be empty";
+
+    public interface onRecipeClickListener {
+        void onAllRecipeSelected(String name);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (onRecipeClickListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onRecipeClickListener");
+        }
+    }
 
 
     @Override
@@ -215,25 +233,36 @@ public class AddNewRecipeFragment extends Fragment {
                     findIndex = txtIngredient.indexOf(")");
                     String newIngredient = txtIngredient.substring(findIndex + 2, txtIngredient.length());
                     dbOperations.AddToProducts(countItems + 1, newIngredient);
+                    ingredient.setText("");
                 }
                 Intent startSrv = new Intent(getActivity(), RecipeService.class);
                 getActivity().startService(startSrv);
                 //TODO: Make text of fields reset.
                 sendNotification(name);
+                editName.setText("");
+                editDescription.setText("");
             }
         });
         return rootView;
     }
 
     private void sendNotification(String name) {
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity());
-        mBuilder.setContentTitle("My recipe");
-        mBuilder.setContentText("Recipe: " + name +" is added to database.");
+        mBuilder.setContentTitle("Recipe added!");
+        mBuilder.setContentText("Click here to view");
         mBuilder.setSmallIcon(R.drawable.icon);
-
         Notification notificationObj = mBuilder.build();
+
+        Intent notificationPendingIntent  = new Intent();
+        PendingIntent contentIntent = PendingIntent.getActivity(this, MainActivity,
+                notificationPendingIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT |
+                        Notification.FLAG_AUTO_CANCEL);
+
+
         NotificationManager notificatinManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         notificatinManager.notify(6904, notificationObj);
+
+        mListener.onAllRecipeSelected(name);
     }
 }
