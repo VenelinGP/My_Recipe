@@ -16,7 +16,9 @@ import eu.netcoms.team.radeva.dr.myrecipe.fragments.AllRecipesFragment;
 import eu.netcoms.team.radeva.dr.myrecipe.fragments.HomePageFragment;
 
 
-public class MainActivity extends AppCompatActivity implements HomePageFragment.onRecipeClickListener {
+public class MainActivity extends AppCompatActivity
+        implements HomePageFragment.onRecipeClickListener,
+        AllRecipesFragment.onRecipeClickListener {
     private ViewPager viewPager;
     private FragmentPagerAdapter tabPagesAdapter;
 
@@ -92,6 +94,13 @@ public class MainActivity extends AppCompatActivity implements HomePageFragment.
 
     @Override
     public void onRecipeSelected(String name) {
+        Intent intent = new Intent(this, CurrentRecipeActivity.class);
+        intent.putExtra("Message", name);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAllRecipeSelected(String name) {
         Intent intent = new Intent(this, CurrentRecipeActivity.class);
         intent.putExtra("Message", name);
         startActivity(intent);
